@@ -4,11 +4,6 @@ export function add(input: string) {
     }
 
     const numbers = input.split(',');
-
-    if (numbers.length === 1) {
-        return parseInt(numbers[0], 10);
-    }
-
-    return parseInt(numbers[0], 10) + parseInt(numbers[1], 10);
+    return numbers.reduce((sum, x) => sum + parseInt(x, 10), 0);
 
 }
