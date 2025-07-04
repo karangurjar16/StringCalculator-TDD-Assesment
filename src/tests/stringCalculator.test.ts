@@ -79,4 +79,36 @@ describe('String Calculator', () => {
 
     });
 
+    describe('Step 5: Negative numbers validation', () => {
+
+        it('should throw exception for single negative number', () => {
+            expect(() => add('-1')).toThrow('negative numbers not allowed -1');
+        });
+
+        it('should throw exception for negative number with positive numbers', () => {
+            expect(() => add('1,-2,3')).toThrow('negative numbers not allowed -2');
+        });
+
+        it('should throw exception for multiple negative numbers', () => {
+            expect(() => add('-1,2,-3')).toThrow('negative numbers not allowed -1,-3');
+        });
+
+        it('should show all negative numbers in exception message', () => {
+            expect(() => add('-1,-2,-3,4')).toThrow('negative numbers not allowed -1,-2,-3');
+        });
+
+        it('should throw exception with custom delimiter and negative numbers', () => {
+            expect(() => add('//;\n1;-2;3;-4')).toThrow('negative numbers not allowed -2,-4');
+        });
+
+        it('should throw exception for negative numbers with new lines', () => {
+            expect(() => add('1\n-2,3')).toThrow('negative numbers not allowed -2');
+        });
+
+        it('should handle mix of negative and positive with various delimiters', () => {
+            expect(() => add('//*\n-1*2*-3*4')).toThrow('negative numbers not allowed -1,-3');
+        });
+        
+    });
+
 });
