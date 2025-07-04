@@ -23,4 +23,20 @@ describe('String Calculator', () => {
 
     });
 
+    describe('Step 2: Handle multiple numbers', () => {
+
+        it('should handle three numbers', () => {
+            expect(add('1,2,3')).toBe(6);
+        });
+
+        it('should handle four numbers', () => {
+            expect(add('1,2,3,4')).toBe(10);
+        });
+
+        it('should handle many numbers', () => {
+            expect(add('1,2,3,4,5,6,7,8,9,10')).toBe(55);
+        });
+
+    });
+
 });
