@@ -108,7 +108,38 @@ describe('String Calculator', () => {
         it('should handle mix of negative and positive with various delimiters', () => {
             expect(() => add('//*\n-1*2*-3*4')).toThrow('negative numbers not allowed -1,-3');
         });
-        
+
+    });
+
+    describe('Step 6: Numbers bigger than 1000 should be ignored', () => {
+
+        it('should ignore numbers bigger than 1000', () => {
+            expect(add('2,1001')).toBe(2);
+        });
+
+        it('should include numbers equal to 1000', () => {
+            expect(add('2,1000')).toBe(1002);
+        });
+
+        it('should ignore multiple large numbers', () => {
+            expect(add('1,2,1001,1002,3')).toBe(6);
+        });
+
+        it('should handle custom delimiter with large numbers', () => {
+            expect(add('//;\n1;2000;3')).toBe(4);
+        });
+
+        it('should handle mix of valid and invalid numbers', () => {
+            expect(add('1000,1001,1,2')).toBe(1003);
+        });
+
+        it('should ignore large numbers with new lines', () => {
+            expect(add('1\n1500,2')).toBe(3);
+        });
+
+        it('should handle edge case with only large numbers', () => {
+            expect(add('1001,1002,1003')).toBe(0);
+        });
     });
 
 });
