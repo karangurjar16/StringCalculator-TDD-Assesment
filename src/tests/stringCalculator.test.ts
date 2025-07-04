@@ -169,5 +169,51 @@ describe('String Calculator', () => {
         });
 
     });
+    describe('Step 8: Allow multiple delimiters', () => {
+
+        it('should support two single-character delimiters', () => {
+            expect(add('//[*][%]\n1*2%3')).toBe(6);
+        });
+
+        it('should support multiple different delimiters', () => {
+            expect(add('//[;][|]\n1;2|3')).toBe(6);
+        });
+
+        it('should support three delimiters', () => {
+            expect(add('//[*][%][#]\n1*2%3#4')).toBe(10);
+        });
+
+        it('should support multiple delimiters with more numbers', () => {
+            expect(add('//[.][,]\n1.2,3.4,5')).toBe(15);
+        });
+
+        it('should support different single char delimiters', () => {
+            expect(add('//[!][@]\n1!2@3!4')).toBe(10);
+        });
+
+        it('should support many delimiters', () => {
+            expect(add('//[*][%][#][&]\n1*2%3#4&5')).toBe(15);
+        });
+
+    });
+
+    describe('Step 9: Multiple delimiters with length longer than one char', () => {
+    
+    it('should support multiple multi-character delimiters', () => {
+      expect(add('//[***][%%%]\n1***2%%%3')).toBe(6);
+    });
+
+    it('should support multiple long delimiters', () => {
+      expect(add('//[DELIM1][DELIM2]\n1DELIM12DELIM23DELIM14')).toBe(10);
+    });
+
+    it('should support special characters in multi-character delimiters', () => {
+      expect(add('//[***][---]\n1***2---3***4')).toBe(10);
+    });
+
+    it('should support three multi-character delimiters', () => {
+      expect(add('//[***][%%%][###]\n1***2%%%3###4')).toBe(10);
+    });
+  });
 
 });
