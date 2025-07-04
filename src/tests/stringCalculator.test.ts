@@ -142,4 +142,32 @@ describe('String Calculator', () => {
         });
     });
 
+    describe('Step 7: Delimiters can be of any length', () => {
+
+        it('should support multi-character delimiter', () => {
+            expect(add('//[***]\n1***2***3')).toBe(6);
+        });
+
+        it('should support long delimiter', () => {
+            expect(add('//[---]\n1---2---3---4')).toBe(10);
+        });
+
+        it('should support delimiter with special characters', () => {
+            expect(add('//[::]\n1::2::3')).toBe(6);
+        });
+
+        it('should support single character in brackets', () => {
+            expect(add('//[;]\n1;2;3')).toBe(6);
+        });
+
+        it('should support very long delimiter', () => {
+            expect(add('//[DELIM]\n1DELIM2DELIM3')).toBe(6);
+        });
+
+        it('should support delimiter with mixed characters', () => {
+            expect(add('//[*#*]\n1*#*2*#*3')).toBe(6);
+        });
+
+    });
+
 });
