@@ -39,4 +39,24 @@ describe('String Calculator', () => {
 
     });
 
+    describe('Step 3: Handle new lines between numbers', () => {
+
+        it('should handle new line as delimiter', () => {
+            expect(add('1\n2,3')).toBe(6);
+        });
+
+        it('should handle multiple new lines', () => {
+            expect(add('1\n2\n3')).toBe(6);
+        });
+
+        it('should handle mix of commas and new lines', () => {
+            expect(add('1,2\n3,4\n5')).toBe(15);
+        });
+
+        it('should handle complex combinations', () => {
+            expect(add('1\n2,3\n4,5,6')).toBe(21);
+        });
+        
+    });
+
 });
