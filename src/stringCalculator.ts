@@ -1,13 +1,17 @@
-export function add(input: string) {
-    if (input === '') {
-        return 0;
-    }
+export function add(input: string): number {
+  if (input === '') {
+    return 0;
+  }
 
-    const { numbersString, delimiter } = extractDelimiterAndNumberString(input);
-    const numArray = numbersString.split(delimiter);
+  const { numbersString, delimiter } = extractDelimiterAndNumberString(input);
+  const numArray = numbersString.split(delimiter).map(n => parseInt(n, 10));
 
-    return numArray.reduce((sum, x) => sum + parseInt(x, 10), 0);
+  const negatives = numArray.filter(n => n < 0);
+  if (negatives.length > 0) {
+    throw new Error(`negative numbers not allowed ${negatives.join(',')}`);
+  }
 
+  return numArray.reduce((sum, n) => sum + n, 0);
 }
 
 function extractDelimiterAndNumberString(input: string): { delimiter: RegExp; numbersString: string } {
