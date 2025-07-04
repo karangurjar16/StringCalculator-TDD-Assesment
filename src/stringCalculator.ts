@@ -3,7 +3,9 @@ export function add(input: string) {
         return 0;
     }
 
-    const numbers = input.split(',');
-    return numbers.reduce((sum, x) => sum + parseInt(x, 10), 0);
+    let delimiters: RegExp = /,|\n/;
+    const numArray = input.split(delimiters);
+
+    return numArray.reduce((sum, x) => sum + parseInt(x, 10), 0);
 
 }
