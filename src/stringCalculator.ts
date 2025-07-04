@@ -17,24 +17,31 @@ export function add(input: string): number {
 }
 
 export function extractDelimiterAndNumberString(input: string): { delimiter: RegExp; numbersString: string } {
-  let delimiter: RegExp = /,|\n/;
-  let numbersString = input;
+	let delimiter: RegExp = /,|\n/;
+	let numbersString = input;
 
-  if (input.startsWith('//')) {
-    const newlineIndex = input.indexOf('\n');
-    let delimiterSection = input.substring(2, newlineIndex);
-    numbersString = input.substring(newlineIndex + 1);
+	if (input.startsWith('//')) {
+		const newlineIndex = input.indexOf('\n');
+		const delimiterSection = input.substring(2, newlineIndex);
+		numbersString = input.substring(newlineIndex + 1);
 
-    if (delimiterSection.startsWith('[') && delimiterSection.endsWith(']')) {
-      delimiterSection = delimiterSection.slice(1, -1); 
-    }
+		if (delimiterSection.includes('[')) {
+			const parts = delimiterSection.match(/\[([^\]]+)\]/g) || [];
 
-    const escapedDelimiter = delimiterSection.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    delimiter = new RegExp(escapedDelimiter);
-  }
+			const delimiters = parts.map(d =>
+				d.slice(1, -1).replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+			);
 
-  return {
-    delimiter,
-    numbersString,
-  };
+			delimiter = new RegExp(delimiters.join('|')); // combine with OR
+		} else {
+			const escaped = delimiterSection.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+			delimiter = new RegExp(escaped);
+
+		}
+	}
+
+	return {
+		delimiter,
+		numbersString,
+	};
 }
