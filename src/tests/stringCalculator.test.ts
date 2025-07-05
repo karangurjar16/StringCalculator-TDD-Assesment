@@ -198,22 +198,51 @@ describe('String Calculator', () => {
     });
 
     describe('Step 9: Multiple delimiters with length longer than one char', () => {
-    
-    it('should support multiple multi-character delimiters', () => {
-      expect(add('//[***][%%%]\n1***2%%%3')).toBe(6);
+
+        it('should support multiple multi-character delimiters', () => {
+            expect(add('//[***][%%%]\n1***2%%%3')).toBe(6);
+        });
+
+        it('should support multiple long delimiters', () => {
+            expect(add('//[DELIM1][DELIM2]\n1DELIM12DELIM23DELIM14')).toBe(10);
+        });
+
+        it('should support special characters in multi-character delimiters', () => {
+            expect(add('//[***][---]\n1***2---3***4')).toBe(10);
+        });
+
+        it('should support three multi-character delimiters', () => {
+            expect(add('//[***][%%%][###]\n1***2%%%3###4')).toBe(10);
+        });
     });
 
-    it('should support multiple long delimiters', () => {
-      expect(add('//[DELIM1][DELIM2]\n1DELIM12DELIM23DELIM14')).toBe(10);
-    });
+    describe('Edge cases and boundary conditions', () => {
 
-    it('should support special characters in multi-character delimiters', () => {
-      expect(add('//[***][---]\n1***2---3***4')).toBe(10);
-    });
+        it('should handle zero values', () => {
+            expect(add('0,0,0')).toBe(0);
+        });
 
-    it('should support three multi-character delimiters', () => {
-      expect(add('//[***][%%%][###]\n1***2%%%3###4')).toBe(10);
+        it('should handle custom delimiter with single number', () => {
+            expect(add('//;\n5')).toBe(5);
+        });
+
+
+        it('should handle number exactly 1000', () => {
+            expect(add('1000')).toBe(1000);
+        });
+
+        it('should handle number exactly 1001', () => {
+            expect(add('1001')).toBe(0);
+        });
+
+        it('should handle empty string with custom delimiter', () => {
+            expect(add('//;\n')).toBe(0);
+        });
+
+        it('should handele when using empty custom delimiter', () => {
+            expect(add('//[]\n123')).toBe(6);
+        });
+
     });
-  });
 
 });
